@@ -172,7 +172,8 @@ class Column<T>(
         newColumn.foreignKey = foreignKey
         @Suppress("UNCHECKED_CAST")
         newColumn.dbDefaultValue = dbDefaultValue as Expression<R>?
-        newColumn.isDatabaseGenerated = isDatabaseGenerated
+          val isReference = foreignKey != null
+        newColumn.isDatabaseGenerated = if (isReference) false else isDatabaseGenerated
         newColumn.extraDefinitions = extraDefinitions
         body?.let { newColumn.it() }
 
